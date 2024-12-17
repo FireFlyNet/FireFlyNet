@@ -14,6 +14,22 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
+tasks.register('server-lib-build', Jar) {
+    archiveBaseName.set('server-lib-build')
+    dependsOn ':server:build'
+    dependsOn ':api:build'
+    from project(':server').configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    from project(':server').sourceSets.main.output
+}
+
+tasks.register('client-lib-build', Jar) {
+    archiveBaseName.set('client-lib-build')
+    dependsOn ':client:build'
+    dependsOn ':api:build'
+    from project(':client').configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    from project(':client').sourceSets.main.output
+}
+
 test {
     useJUnitPlatform()
 }
