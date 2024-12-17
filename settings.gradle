@@ -1,0 +1,3 @@
+rootProject.name = 'FireFlyNet'
+
+include "client", "server", "api"
